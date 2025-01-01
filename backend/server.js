@@ -27,3 +27,7 @@ const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Socket.IO server running on port ${PORT}`);
 });
+
+app.get('/status', (req, res) => {
+  res.send('Server is running');
+});
