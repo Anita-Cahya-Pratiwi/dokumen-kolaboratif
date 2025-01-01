@@ -1,0 +1,28 @@
+.text-edit-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4; /* Warna latar belakang */
+    padding: 20px;
+  }
+  
+  .text-edit-container h4 {
+    color: #45c4fa; /* Warna heading */
+    margin-bottom: 20px;
+  }
+  
+  textarea {
+    width: 80%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  textarea:focus {
+    outline: none;
+    border-color: #4CAF50;
+  }
