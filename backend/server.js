@@ -23,13 +23,13 @@ io.on('connection', (socket) => {
   });
 });
 
-app.get('/', (req, res) => {
-  res.send('Backend server is running!');
-});
-
 const PORT = process.env.PORT || 4000; 
 server.listen(PORT, () => {
   console.log(`Socket.IO server running on port ${PORT}`);
+});
+
+app.get('/', (req, res) => {
+  res.send('Backend server is running!');
 });
 
 app.get('/status', (req, res) => {
