@@ -11,10 +11,6 @@ const io = new Server(server, {
   }
 });
 
-app.get('/', (req, res) => {
-  res.send('Backend server is running!');
-});
-
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
   
@@ -25,6 +21,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
   });
+});
+
+app.get('/', (req, res) => {
+  res.send('Backend server is running!');
 });
 
 const PORT = process.env.PORT || 4000; 
