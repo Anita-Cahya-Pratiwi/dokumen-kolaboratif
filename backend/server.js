@@ -31,7 +31,3 @@ server.listen(PORT, () => {
 app.get('/', (req, res) => {
   res.send('Backend server is running!');
 });
-
-app.get('/status', (req, res) => {
-  res.send('Server is running');
-});
