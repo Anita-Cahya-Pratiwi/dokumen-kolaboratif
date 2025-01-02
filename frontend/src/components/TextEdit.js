@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './textedit.css';
 import { io } from 'socket.io-client';
 
-const socket = io('https://serverjk.vercel.app/');
+const socket = io('https://jalakataid.vercel.app/');
 
 class TextEdit extends Component {
   constructor(props) {
