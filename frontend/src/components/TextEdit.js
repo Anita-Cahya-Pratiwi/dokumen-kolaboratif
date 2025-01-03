@@ -12,15 +12,19 @@ class TextEdit extends Component {
     };
   }
 
-  handleChange = (event) => {
+   handleChange = (event) => {
     const text = event.target.value;
-    this.setState({ text });
-    socket.emit('text-change', text); //mengirim
+    if (text !== this.state.text) {
+      this.setState({ text });
+      socket.emit('text-change', text); 
+    }
   };
 
   componentDidMount() {
     socket.on('text-update', (text) => {
-      this.setState({ text });  //perbarui
+      if (text !== this.state.text) {
+        this.setState({ text }); 
+      }
     });
   }
 
