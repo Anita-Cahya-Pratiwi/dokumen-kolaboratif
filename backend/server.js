@@ -20,22 +20,14 @@ io.on('connection', (socket) => {
   // Kirimkan daftar klien yang terhubung
   io.emit('connected-clients', connectedClients);
 
-  socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
-    connectedClients = connectedClients.filter(id => id !== socket.id); // Menghapus socket ID klien yang terputus
-    io.emit('connected-clients', connectedClients); // Kirimkan daftar yang diperbarui
-  });
-});
-
-io.on('connection', (socket) => {
-  console.log('User connected:', socket.id);
-  
   socket.on('text-change', (text) => {
     socket.broadcast.emit('text-update', text); 
   });
 
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
+    connectedClients = connectedClients.filter(id => id !== socket.id); // Menghapus socket ID klien yang terputus
+    io.emit('connected-clients', connectedClients); // Kirimkan daftar yang diperbarui
   });
 });
 
