@@ -44,6 +44,14 @@ class TextEdit extends Component {
           value={this.state.text}
           onChange={this.handleChange} 
         ></textarea>
+      <div>
+          <h3>Klien yang Terhubung:</h3>
+          <ul>
+            {this.state.clients.map((client, index) => (
+              <li key={index}>{client}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }
