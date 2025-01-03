@@ -11,6 +11,22 @@ const io = new Server(server, {
   }
 });
 
+let connectedClients = [];
+
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+  connectedClients.push(socket.id); // Menyimpan socket ID klien yang terhubung
+  
+  // Kirimkan daftar klien yang terhubung
+  io.emit('connected-clients', connectedClients);
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+    connectedClients = connectedClients.filter(id => id !== socket.id); // Menghapus socket ID klien yang terputus
+    io.emit('connected-clients', connectedClients); // Kirimkan daftar yang diperbarui
+  });
+});
+
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
   
