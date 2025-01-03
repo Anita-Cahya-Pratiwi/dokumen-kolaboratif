@@ -12,25 +12,31 @@ class TextEdit extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ''
+      text: '',
+      clients: [] // Menambahkan state untuk daftar klien
     };
   }
 
-   handleChange = (event) => {
+  componentDidMount() {
+    socket.on('text-update', (text) => {
+      if (text !== this.state.text) {
+        this.setState({ text });
+      }
+    });
+
+    // Mendengarkan event 'connected-clients' untuk memperbarui daftar klien
+    socket.on('connected-clients', (clients) => {
+      this.setState({ clients }); // Menyimpan daftar klien dalam state
+    });
+  }
+
+  handleChange = (event) => {
     const text = event.target.value;
     if (text !== this.state.text) {
       this.setState({ text });
       socket.emit('text-change', text); 
     }
   };
-
-  componentDidMount() {
-    socket.on('text-update', (text) => {
-      if (text !== this.state.text) {
-        this.setState({ text }); 
-      }
-    });
-  }
 
   render() {
     return (
@@ -44,7 +50,7 @@ class TextEdit extends Component {
           value={this.state.text}
           onChange={this.handleChange} 
         ></textarea>
-      <div>
+        <div>
           <h3>Klien yang Terhubung:</h3>
           <ul>
             {this.state.clients.map((client, index) => (
