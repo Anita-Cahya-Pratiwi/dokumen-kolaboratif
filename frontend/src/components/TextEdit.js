@@ -4,6 +4,10 @@ import { io } from 'socket.io-client';
 
 const socket = io('https://jalakataid.vercel.app/');
 
+socket.on('connected-clients', (clients) => {
+  console.log('Connected clients:', clients); // Tampilkan daftar klien yang terhubung
+});
+
 class TextEdit extends Component {
   constructor(props) {
     super(props);
