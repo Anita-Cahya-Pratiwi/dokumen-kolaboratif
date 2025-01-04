@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import './textedit.css';
 import { io } from 'socket.io-client';
 
-const socket = io('https://jalakataid.vercel.app/');
+const socket = io('https://jalakataid.vercel.app/', {
+  withCredentials: true,
+  transports: ['websocket', 'polling'] // Ensure matching transport types
+});
 
 socket.on('connected-clients', (clients) => {
   console.log('Connected clients:', clients); // Tampilkan daftar klien yang terhubung
