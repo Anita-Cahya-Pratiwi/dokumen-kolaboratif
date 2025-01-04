@@ -11,34 +11,30 @@ const io = new Server(server, {
     allowedHeaders: ["Content-Type"],
     credentials: true
   },
-  transports: ["websocket", "polling"] // Pastikan transportasi diatur
-});
-
-io.on('connection', (socket) => {
-  console.log('Transport used:', socket.conn.transport.name);
+  transports: ["websocket", "polling"] // Ensure transport types are set
 });
 
 let connectedClients = [];
 
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
-  connectedClients.push(socket.id); // Menyimpan socket ID klien yang terhubung
+  console.log('Transport used:', socket.conn.transport.name);
 
-  // Kirimkan daftar klien yang terhubung
-  io.emit('connected-clients', connectedClients);
+  connectedClients.push(socket.id); // Save connected client socket ID
+  io.emit('connected-clients', connectedClients); // Send updated client list
 
   socket.on('text-change', (text) => {
-    socket.broadcast.emit('text-update', text); 
+    socket.broadcast.emit('text-update', text); // Broadcast text changes
   });
 
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
-    connectedClients = connectedClients.filter(id => id !== socket.id); // Menghapus socket ID klien yang terputus
-    io.emit('connected-clients', connectedClients); // Kirimkan daftar yang diperbarui
+    connectedClients = connectedClients.filter(id => id !== socket.id); // Remove client on disconnect
+    io.emit('connected-clients', connectedClients); // Send updated client list
   });
 });
 
-const PORT = process.env.PORT || 4000; 
+const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Socket.IO server running on port ${PORT}`);
 });
