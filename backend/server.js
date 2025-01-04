@@ -7,7 +7,9 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ["https://jalakataid-ten.vercel.app"],
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true
   },
   transports: ["websocket", "polling"] // Pastikan transportasi diatur
 });
