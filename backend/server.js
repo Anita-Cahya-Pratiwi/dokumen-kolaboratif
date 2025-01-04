@@ -6,9 +6,14 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://jalakataid-ten.vercel.app/"], 
+    origin: ["https://jalakataid-ten.vercel.app"],
     methods: ["GET", "POST"]
-  }
+  },
+  transports: ["websocket", "polling"] // Pastikan transportasi diatur
+});
+
+io.on('connection', (socket) => {
+  console.log('Transport used:', socket.conn.transport.name);
 });
 
 let connectedClients = [];
@@ -16,7 +21,7 @@ let connectedClients = [];
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
   connectedClients.push(socket.id); // Menyimpan socket ID klien yang terhubung
-  
+
   // Kirimkan daftar klien yang terhubung
   io.emit('connected-clients', connectedClients);
 
